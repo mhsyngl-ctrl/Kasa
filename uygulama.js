@@ -11,7 +11,8 @@ const $$ = (s) => [...document.querySelectorAll(s)];
 const D = { donem: 'ay', defterler: [], markalar: [] };
 
 const TL = new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-const para = (n) => TL.format(Number(n) || 0) + ' ₺';
+const ISARET = { TRY: '₺', USD: '$', EUR: '€' };
+const para = (n, pb) => TL.format(Number(n) || 0) + ' ' + (ISARET[pb] || ISARET.TRY);
 const AYLAR = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
 const KISA  = ['Paz','Pzt','Sal','Çar','Per','Cum','Cmt'];
 const iso = (d) => d.toISOString().slice(0, 10);
@@ -61,7 +62,7 @@ async function basla() {
 
 async function yukle() {
   const [d, m] = await Promise.all([
-    sb.from('kasa_defterler').select('ad,simge,sira').eq('arsiv', false).order('sira'),
+    sb.from('kasa_defterler').select('ad,simge,sira,para_birimi').eq('arsiv', false).order('sira'),
     sb.from('kasa_marka_ozet')
       .select('marka,tarih,teslim_alinan,teslim_bekleyen,guncellendi')
       .order('tarih', { ascending: false }).limit(900),
@@ -86,6 +87,7 @@ function ciz() {
     return {
       ad: d.ad,
       simge: d.simge || '📦',
+      pb: d.para_birimi || 'TRY',
       bagli: hepsi.length > 0,
       teslim: donem.reduce((a, m) => a + Number(m.teslim_alinan || 0), 0),
       bekleyen: donem.reduce((a, m) => a + Number(m.teslim_bekleyen || 0), 0),
@@ -93,8 +95,15 @@ function ciz() {
     };
   });
 
-  const toplam = markalar.reduce((a, m) => a + m.teslim, 0);
-  const bekleyen = markalar.reduce((a, m) => a + m.bekleyen, 0);
+  // Para birimleri farkli olabilir; birbirine eklenmez, ayri ayri toplanir.
+  const toplamlar = {};
+  const bekleyenler = {};
+  for (const m of markalar) {
+    if (!m.bagli) continue;
+    toplamlar[m.pb] = (toplamlar[m.pb] || 0) + m.teslim;
+    bekleyenler[m.pb] = (bekleyenler[m.pb] || 0) + m.bekleyen;
+  }
+  const birimler = Object.keys(toplamlar);
 
   const gunler = D.markalar
     .filter((m) => m.tarih >= bas && m.tarih <= bit && Number(m.teslim_alinan || 0) > 0)
@@ -112,10 +121,14 @@ function ciz() {
 
   h += '<div class="hero">' +
     '<div class="etiket">Teslim edilen kasa</div>' +
-    '<div class="rakam sayi' + (toplam > 0 ? '' : ' bos') + '">' + para(toplam) + '</div>' +
+    (birimler.length
+      ? birimler.map((b) =>
+          '<div class="rakam sayi' + (toplamlar[b] > 0 ? '' : ' bos') + '">' +
+          para(toplamlar[b], b) + '</div>').join('')
+      : '<div class="rakam sayi bos">' + para(0, 'TRY') + '</div>') +
     '<div class="alt">' + donemAdi() + '</div>' +
-    (bekleyen > 0
-      ? '<div class="zil sayi">🔔 onay bekleyen ' + para(bekleyen) + '</div>' : '') +
+    birimler.filter((b) => bekleyenler[b] > 0).map((b) =>
+      '<div class="zil sayi">🔔 onay bekleyen ' + para(bekleyenler[b], b) + '</div>').join('') +
   '</div>';
 
   h += '<div class="markalar">' + markalar.map((m) =>
@@ -123,7 +136,7 @@ function ciz() {
       '<div class="ikon">' + m.simge + '</div>' +
       '<div class="ad">' + kacak(m.ad) + '</div>' +
       '<div class="tutar sayi' + (m.bagli && m.teslim > 0 ? '' : ' bos') + '">' +
-        (m.bagli ? para(m.teslim) : '—') + '</div>' +
+        (m.bagli ? para(m.teslim, m.pb) : '—') + '</div>' +
       '<div class="not">' + (m.bagli
         ? (m.adet ? m.adet + ' teslim' : 'teslim yok')
         : 'henüz bağlanmadı') + '</div>' +
@@ -141,7 +154,8 @@ function ciz() {
           '<div class="gun">' + t.getDate() + ' ' + AYLAR[t.getMonth()] + '</div>' +
           '<div class="haf">' + KISA[t.getDay()] + ' · ' + kacak(g.marka) + '</div>' +
         '</div>' +
-        '<div class="tut sayi">' + para(g.teslim_alinan) + '</div>' +
+        '<div class="tut sayi">' +
+          para(g.teslim_alinan, (d && d.para_birimi) || 'TRY') + '</div>' +
       '</div>';
     }).join('') + '</div>';
   } else {
