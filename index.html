@@ -21,93 +21,97 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;background:var(--zemin);color:var(--yazi);
   font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  overscroll-behavior-y:none}
-body{padding-top:var(--ust);padding-bottom:calc(64px + var(--alt))}
+  overscroll-behavior-y:none;-webkit-font-smoothing:antialiased}
+body{padding-top:var(--ust);padding-bottom:calc(24px + var(--alt))}
 button,input,select{font:inherit;color:inherit}
-button{background:none;border:0;cursor:pointer}
+button{background:none;border:0;cursor:pointer;padding:0}
 .gizli{display:none!important}
+.sayi{font-variant-numeric:tabular-nums;letter-spacing:-.5px}
 
-#giris{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;
-  padding:32px 24px;background:var(--zemin);z-index:100}
-#giris h1{font-size:34px;margin:0 0 4px;letter-spacing:-.5px}
-#giris p{color:var(--soluk);margin:0 0 32px}
-#giris input{width:100%;padding:15px 16px;margin-bottom:12px;border-radius:12px;
+/* ---------- Giriş ---------- */
+#giris{position:fixed;inset:0;z-index:100;background:var(--zemin);
+  display:flex;flex-direction:column;justify-content:center;padding:32px 24px}
+#giris h1{font-size:36px;margin:0 0 6px;letter-spacing:-1px}
+#giris p{color:var(--soluk);margin:0 0 32px;font-size:15px}
+#giris input{width:100%;padding:15px 16px;margin-bottom:10px;border-radius:14px;
   background:var(--kart);border:1px solid var(--cizgi)}
-#giris button{width:100%;padding:15px;border-radius:12px;background:var(--mavi);
-  color:#062038;font-weight:600;margin-top:8px}
-.hata{color:var(--kirmizi);font-size:13px;min-height:18px;margin-top:10px}
+#giris button{width:100%;padding:16px;border-radius:14px;background:var(--mavi);
+  color:#062038;font-weight:700;margin-top:8px}
+.hata{color:var(--kirmizi);font-size:13px;min-height:18px;margin-top:12px}
 
-header{position:sticky;top:0;z-index:40;background:var(--zemin);
-  padding:8px 14px 10px;display:flex;align-items:center;gap:10px}
-#defterSec{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;
-  background:var(--kart);border-radius:999px;padding:8px 16px;font-weight:600}
-#defterSec small{display:block;color:var(--soluk);font-weight:400;font-size:11px}
-.ikon-dugme{width:38px;height:38px;border-radius:50%;background:var(--kart);
-  display:grid;place-items:center;font-size:17px;flex-shrink:0}
+/* ---------- Başlık ---------- */
+header{display:flex;align-items:center;gap:8px;padding:10px 12px 4px;min-height:52px}
+header .orta{flex:1;text-align:center;font-weight:600;font-size:16px}
+.yuvarlak{width:40px;height:40px;border-radius:50%;background:var(--kart);
+  display:grid;place-items:center;font-size:17px;flex-shrink:0;color:var(--soluk)}
+.yuvarlak:active{background:var(--kart2)}
+.geri{display:flex;align-items:center;gap:4px;color:var(--mavi);font-size:16px;
+  padding:8px 10px 8px 4px;margin-left:-4px}
 
-.kart{background:var(--kart);border-radius:16px;padding:16px;margin:0 14px 12px}
-.kart-baslik{display:flex;justify-content:space-between;align-items:baseline;
-  margin-bottom:12px}
-.kart-baslik h2{font-size:12px;letter-spacing:1.2px;color:var(--soluk);
-  text-transform:uppercase;margin:0;font-weight:600}
-.buyuk{font-size:26px;font-weight:700;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
-.ikili{display:flex;gap:14px}
-.ikili>div{flex:1}
-.etiket{font-size:11px;color:var(--soluk);letter-spacing:.4px;margin-bottom:2px}
-.tutar{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
-.bekleyen{font-size:13px;color:var(--sari);font-variant-numeric:tabular-nums;
-  display:flex;align-items:center;gap:3px}
-.aciklama{font-size:11px;color:var(--daha-soluk);margin-top:10px;line-height:1.35}
-.m{color:var(--mavi)} .k{color:var(--kirmizi)} .y{color:var(--yesil)} .t{color:var(--turuncu)}
-.sari{color:var(--sari)}
+/* ---------- Dönem seçici ---------- */
+.donem{display:flex;gap:2px;background:var(--kart2);border-radius:11px;padding:3px;
+  margin:4px 16px 20px}
+.donem button{flex:1;padding:7px 0;border-radius:9px;font-size:13px;color:var(--soluk)}
+.donem button.aktif{background:var(--kart);color:var(--yazi);font-weight:600;
+  box-shadow:0 1px 3px rgba(0,0,0,.3)}
 
-.donem{display:flex;gap:4px;background:var(--kart2);border-radius:10px;padding:3px;
-  margin:0 14px 12px}
-.donem button{flex:1;padding:8px;border-radius:8px;font-size:13px;color:var(--soluk)}
-.donem button.aktif{background:var(--kart);color:var(--yazi);font-weight:600}
+/* ---------- Ana rakam ---------- */
+.hero{padding:8px 20px 24px}
+.hero .etiket{font-size:12px;letter-spacing:1.4px;color:var(--soluk);
+  text-transform:uppercase;font-weight:600}
+.hero .donemAdi{font-size:13px;color:var(--daha-soluk);margin-top:3px}
+.hero .rakam{font-size:46px;font-weight:700;color:var(--yesil);margin-top:10px;
+  line-height:1.05}
+.hero .rakam.bos{color:var(--daha-soluk);font-size:38px}
+.hero .zil{font-size:13px;color:var(--sari);margin-top:8px}
+.hero .not{font-size:12px;color:var(--daha-soluk);margin-top:12px;line-height:1.4}
 
-.grup-basi{display:flex;justify-content:space-between;padding:14px 18px 6px;
-  font-size:11px;letter-spacing:1.1px;color:var(--soluk);text-transform:uppercase;
-  font-weight:600}
-.satir{display:flex;align-items:center;gap:12px;padding:12px 18px;
+/* ---------- Liste ---------- */
+.liste{margin:0 16px;background:var(--kart);border-radius:16px;overflow:hidden}
+.satir{display:flex;align-items:center;gap:13px;padding:15px 16px;
   border-bottom:1px solid var(--cizgi)}
-.satir:active{background:var(--kart)}
+.satir:last-child{border-bottom:0}
+.satir.dokunulur:active{background:var(--kart2)}
+.satir .simge{font-size:22px;width:30px;text-align:center;flex-shrink:0}
 .satir .orta{flex:1;min-width:0}
-.satir .ad{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.satir .alt{font-size:12px;color:var(--soluk);white-space:nowrap;overflow:hidden;
+.satir .ad{font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;
   text-overflow:ellipsis}
-.satir .sag{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;
-  white-space:nowrap}
-.satir .sag small{display:block;font-weight:400;font-size:11px;color:var(--soluk)}
-.simge{width:34px;height:34px;border-radius:10px;background:var(--kart2);
-  display:grid;place-items:center;font-size:16px;flex-shrink:0}
-.gun-basi{padding:16px 18px 4px;font-size:12px;color:var(--soluk);font-weight:600;
-  display:flex;justify-content:space-between}
-.bos{text-align:center;color:var(--daha-soluk);padding:48px 24px;font-size:14px}
-.bos b{display:block;color:var(--soluk);font-size:15px;margin-bottom:6px}
-.satir.gecikmis{border-left:3px solid var(--kirmizi);padding-left:15px}
+.satir .alt{font-size:12.5px;color:var(--soluk);margin-top:2px}
+.satir .sag{text-align:right;font-weight:700;font-size:17px;white-space:nowrap;
+  color:var(--yesil)}
+.satir .sag.pasif{color:var(--daha-soluk);font-weight:500}
+.satir .ok{color:var(--daha-soluk);font-size:18px;flex-shrink:0;margin-left:-4px}
 
-nav{position:fixed;left:0;right:0;bottom:0;z-index:45;display:flex;
-  background:rgba(15,22,33,.94);backdrop-filter:blur(16px);
-  border-top:1px solid var(--cizgi);padding-bottom:var(--alt)}
-nav button{flex:1;padding:9px 2px 8px;display:flex;flex-direction:column;
-  align-items:center;gap:3px;font-size:10px;color:var(--soluk);letter-spacing:.2px}
-nav button .i{font-size:19px;line-height:1}
-nav button.aktif{color:var(--mavi)}
-nav button.gelir{color:var(--mavi)} nav button.gider{color:var(--kirmizi)}
+.baslik{padding:24px 20px 10px;font-size:12px;letter-spacing:1.2px;
+  color:var(--soluk);text-transform:uppercase;font-weight:600;
+  display:flex;justify-content:space-between;align-items:baseline}
+.baslik .sag{font-size:12px;letter-spacing:0;text-transform:none;color:var(--daha-soluk)}
 
-#perde{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;opacity:0;
+.bos-durum{text-align:center;padding:40px 32px;color:var(--daha-soluk);font-size:14px;
+  line-height:1.5}
+.bos-durum b{display:block;color:var(--soluk);font-size:16px;margin-bottom:8px}
+.yukleniyor{text-align:center;padding:60px;color:var(--daha-soluk)}
+
+/* ---------- Menü ---------- */
+#menu{position:fixed;inset:0;z-index:60;background:var(--zemin);
+  padding-top:var(--ust);transform:translateX(-100%);
+  transition:transform .25s cubic-bezier(.32,.72,0,1)}
+#menu.acik{transform:translateX(0)}
+#menu h2{padding:18px 20px 6px;font-size:22px;margin:0;letter-spacing:-.5px}
+#menu .kim{padding:0 20px 18px;color:var(--daha-soluk);font-size:13px}
+
+/* ---------- Kayıt paneli ---------- */
+#perde{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:70;opacity:0;
   pointer-events:none;transition:opacity .2s}
 #perde.acik{opacity:1;pointer-events:auto}
-#panel{position:fixed;left:0;right:0;bottom:0;z-index:55;background:var(--kart);
-  border-radius:20px 20px 0 0;padding:6px 0 calc(10px + var(--alt));
+#panel{position:fixed;left:0;right:0;bottom:0;z-index:75;background:var(--kart);
+  border-radius:22px 22px 0 0;padding:6px 0 calc(10px + var(--alt));
   transform:translateY(100%);transition:transform .25s cubic-bezier(.32,.72,0,1);
   max-height:92vh;overflow-y:auto;border-top:3px solid var(--mavi)}
 #panel.acik{transform:translateY(0)}
 #panel.gider{border-top-color:var(--kirmizi)}
 #panel.transfer{border-top-color:var(--turuncu)}
-.tutamac{width:38px;height:4px;border-radius:2px;background:var(--cizgi);
-  margin:6px auto 10px}
+.tutamac{width:38px;height:4px;border-radius:2px;background:var(--cizgi);margin:6px auto 10px}
 .sekmeler{display:flex;gap:6px;padding:0 14px 12px}
 .sekmeler button{flex:1;padding:10px;border-radius:10px;background:var(--kart2);
   font-weight:600;font-size:14px;color:var(--soluk)}
@@ -119,7 +123,7 @@ nav button.gelir{color:var(--mavi)} nav button.gider{color:var(--kirmizi)}
 .alan label{width:86px;font-size:13px;color:var(--soluk);flex-shrink:0}
 .alan input,.alan select{flex:1;background:none;border:0;padding:2px 0;min-width:0}
 .alan select{appearance:none;color:var(--yazi)}
-#tutarGoster{font-size:32px;font-weight:700;text-align:right;padding:10px 18px 4px;
+#tutarGoster{font-size:34px;font-weight:700;text-align:right;padding:10px 18px 4px;
   font-variant-numeric:tabular-nums;letter-spacing:-1px}
 .odendi-satir{display:flex;align-items:center;justify-content:space-between;
   padding:12px 16px;border-top:1px solid var(--cizgi)}
@@ -140,44 +144,13 @@ nav button.gelir{color:var(--mavi)} nav button.gider{color:var(--kirmizi)}
 #panel.gider .tuslar .kaydet{background:var(--kirmizi);color:#3a0b06}
 #panel.transfer .tuslar .kaydet{background:var(--turuncu);color:#3a1f02}
 .tuslar .kaydet:disabled{opacity:.4}
-
-#defterLevha{position:fixed;inset:0;z-index:60;background:var(--zemin);
-  padding-top:var(--ust);transform:translateX(-100%);transition:transform .25s}
-#defterLevha.acik{transform:translateX(0)}
-#defterLevha h2{padding:16px 18px 8px;font-size:19px;margin:0}
-.dl-satir{display:flex;align-items:center;gap:12px;padding:14px 18px;
-  border-bottom:1px solid var(--cizgi)}
-.dl-satir.secili{background:var(--kart)}
-
-.marka-kart{background:var(--kart);border-radius:16px;padding:14px 16px;margin:0 14px 10px}
-.marka-kart .ust{display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:10px}
-.marka-kart .ust b{font-size:16px}
-.teslim{background:var(--kart2);border-radius:12px;padding:12px 14px;margin-bottom:12px;
-  border-left:3px solid var(--yesil)}
-.teslim .buyuk{font-size:24px;margin-top:2px}
-.rozet{font-size:10px;background:var(--kart2);color:var(--soluk);padding:3px 8px;
-  border-radius:6px;letter-spacing:.4px}
-.uclu{display:flex;gap:10px}
-.uclu>div{flex:1}
-.cubuk{height:5px;border-radius:3px;background:var(--kart2);margin-top:10px;
-  overflow:hidden;display:flex}
-.cubuk i{display:block;height:100%}
-
-.bar-alan{display:flex;align-items:flex-end;gap:5px;height:120px;padding:0 2px}
-.bar-grup{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
-.bar-ikili{display:flex;gap:2px;align-items:flex-end;height:100px;width:100%;
-  justify-content:center}
-.bar-ikili i{width:7px;border-radius:2px 2px 0 0;min-height:2px;display:block}
-.bar-grup span{font-size:9px;color:var(--daha-soluk)}
-.yukleniyor{text-align:center;padding:40px;color:var(--daha-soluk)}
 </style>
 </head>
 <body>
 
 <div id="giris">
   <h1>Kasa</h1>
-  <p>Markalarının ve kendi paranın tek yeri.</p>
+  <p>Teslim edilen paranın tek yeri.</p>
   <input id="ePosta" type="email" placeholder="E-posta" autocomplete="username"
          autocapitalize="off" spellcheck="false">
   <input id="parola" type="password" placeholder="Parola" autocomplete="current-password">
@@ -186,26 +159,14 @@ nav button.gelir{color:var(--mavi)} nav button.gider{color:var(--kirmizi)}
 </div>
 
 <div id="uygulama" class="gizli">
-  <header>
-    <button class="ikon-dugme" id="menuDugme">☰</button>
-    <button id="defterSec">
-      <span id="defterSimge">🏪</span>
-      <span><span id="defterAd">—</span><small id="defterTip"></small></span>
-    </button>
-    <button class="ikon-dugme" id="yenileDugme">↻</button>
-  </header>
+  <header id="baslik"></header>
   <main id="icerik"><div class="yukleniyor">Yükleniyor…</div></main>
 </div>
 
-<div id="defterLevha">
-  <h2>Defterlerim</h2>
-  <div id="defterListesi"></div>
-  <div style="padding:20px 18px;color:var(--daha-soluk);font-size:12px">
-    Defter sayısında sınır yok.
-  </div>
-  <div style="padding:0 18px">
-    <button id="levhaKapat" style="color:var(--mavi);font-size:15px">← Kapat</button>
-  </div>
+<div id="menu">
+  <h2>Kasa</h2>
+  <div class="kim" id="menuKim"></div>
+  <div id="menuIcerik"></div>
 </div>
 
 <div id="perde"></div>
@@ -224,7 +185,7 @@ nav button.gelir{color:var(--mavi)} nav button.gider{color:var(--kirmizi)}
   <div class="alan"><label>Açıklama</label><input id="fAciklama" placeholder="isteğe bağlı"></div>
   <div class="odendi-satir">
     <div class="yazi"><b id="odendiBaslik">Parası alındı</b>
-      <small id="odendiAlt">Kapatırsan kâra girer, nakit akışına girmez</small></div>
+      <small>Kapatırsan bekleyen olarak durur</small></div>
     <button class="anahtar acik" id="fOdendi"><i></i></button>
   </div>
   <div class="alan gizli" id="vadeAlan"><label>Vade</label><input id="fVade" type="date"></div>
@@ -239,15 +200,7 @@ nav button.gelir{color:var(--mavi)} nav button.gider{color:var(--kirmizi)}
   </div>
 </div>
 
-<nav id="altbar" class="gizli">
-  <button data-sekme="ozet" class="aktif"><span class="i">📊</span>ÖZET</button>
-  <button data-sekme="islemler"><span class="i">🕘</span>İŞLEMLER</button>
-  <button data-sekme="hesaplar"><span class="i">📒</span>HESAPLAR</button>
-  <button class="gelir" id="gelirDugme"><span class="i">⊕</span>GELİR</button>
-  <button class="gider" id="giderDugme"><span class="i">⊖</span>GİDER</button>
-</nav>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.js"></script>
-<script src="https://cuujupeindodpsdjcivm.supabase.co/functions/v1/kasa/uygulama.js"></script>
+<script src="uygulama.js?s=2"></script>
 </body>
 </html>
