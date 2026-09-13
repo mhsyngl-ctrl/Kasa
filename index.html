@@ -4,17 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Kasa">
-<meta name="theme-color" content="#0f1621">
+<meta name="theme-color" content="#ffffff">
 <title>Kasa</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="https://cuujupeindodpsdjcivm.supabase.co/functions/v1/kasa/simge.png">
 <style>
 :root{
-  --zemin:#0f1621; --kart:#182233; --kart2:#1e2a3d; --cizgi:#28354c;
-  --yazi:#e8eef7; --soluk:#8b9bb4; --silik:#5f6f88;
-  --yesil:#3ecf8e; --sari:#ffd166; --mavi:#4a9eff;
+  --zemin:#ffffff; --kart:#F5F6F8; --kart2:#EDEFF3; --cizgi:#E4E7EC;
+  --yazi:#1C2638; --soluk:#5A6473; --silik:#8A93A3;
+  --yesil:#0F7A52; --sari:#8A6A3D; --mavi:#1F4E8C;
   --ust:env(safe-area-inset-top); --alt:env(safe-area-inset-bottom);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -35,8 +35,8 @@ button{background:none;border:0;padding:0;cursor:pointer}
 #giris input{width:100%;padding:15px 16px;margin-bottom:10px;border-radius:14px;
   background:var(--kart);border:1px solid var(--cizgi)}
 #giris button{width:100%;padding:16px;border-radius:14px;background:var(--mavi);
-  color:#062038;font-weight:700;margin-top:8px}
-.hata{color:#ff6b5e;font-size:13px;min-height:18px;margin-top:12px}
+  color:#ffffff;font-weight:700;margin-top:8px}
+.hata{color:#C0392B;font-size:13px;min-height:18px;margin-top:12px}
 
 /* üst satır */
 .ust{display:flex;align-items:center;justify-content:space-between;
@@ -64,12 +64,12 @@ button{background:none;border:0;padding:0;cursor:pointer}
 
 /* marka kutuları */
 .markalar{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px 28px}
-.marka{background:var(--kart);border-radius:16px;padding:15px 14px 16px}
-.marka .ikon{font-size:24px;line-height:1}
-.marka .ad{font-size:13.5px;color:var(--soluk);margin:9px 0 6px;font-weight:500}
-.marka .tutar{font-size:21px;font-weight:700;color:var(--yesil)}
-.marka .tutar.bos{color:var(--silik);font-weight:500}
-.marka .not{font-size:11.5px;color:var(--silik);margin-top:5px}
+.markalar .marka{background:var(--kart);border-radius:16px;padding:15px 14px 16px}
+.markalar .marka .ikon{font-size:24px;line-height:1}
+.markalar .marka .ad{font-size:13.5px;color:var(--soluk);margin:9px 0 6px;font-weight:500}
+.markalar .marka .tutar{font-size:21px;font-weight:700;color:var(--yesil)}
+.markalar .marka .tutar.bos{color:var(--silik);font-weight:500}
+.markalar .marka .not{font-size:11.5px;color:var(--silik);margin-top:5px}
 
 /* son teslimler */
 .baslik{padding:0 20px 10px;font-size:11.5px;letter-spacing:1.5px;color:var(--soluk);
