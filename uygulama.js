@@ -64,7 +64,7 @@ async function yukle() {
   const [d, m] = await Promise.all([
     sb.from('kasa_defterler').select('ad,simge,sira,para_birimi').eq('arsiv', false).order('sira'),
     sb.from('kasa_marka_ozet')
-      .select('marka,tarih,teslim_alinan,teslim_bekleyen,teslim_reddedilen,guncellendi')
+      .select('marka,tarih,tahsilat,teslim_alinan,teslim_bekleyen,teslim_reddedilen,guncellendi')
       .order('tarih', { ascending: false }).limit(900),
   ]);
   if (d.error) {
@@ -92,19 +92,30 @@ function ciz() {
       teslim: donem.reduce((a, m) => a + Number(m.teslim_alinan || 0), 0),
       bekleyen: donem.reduce((a, m) => a + Number(m.teslim_bekleyen || 0), 0),
       reddedilen: donem.reduce((a, m) => a + Number(m.teslim_reddedilen || 0), 0),
+      tahsilat: donem.reduce((a, m) => a + Number(m.tahsilat || 0), 0),
       adet: donem.filter((m) => Number(m.teslim_alinan || 0) > 0).length,
     };
   });
+
+  // HENUZ TESLIM EDILMEMIS: tahsil edilmis ama hicbir teslim kaydina girmemis para.
+  // Eksi cikarsa gostermeyiz -- donem sinirinda onceki donemin parasi teslim
+  // edilmis demektir, bilgi degil gurultu olur.
+  for (const m of markalar) {
+    m.girilmemis = Math.max(0,
+      m.tahsilat - (m.teslim + m.bekleyen + m.reddedilen));
+  }
 
   // Para birimleri farkli olabilir; birbirine eklenmez, ayri ayri toplanir.
   const toplamlar = {};
   const bekleyenler = {};
   const reddedilenler = {};
+  const girilmemisler = {};
   for (const m of markalar) {
     if (!m.bagli) continue;
     toplamlar[m.pb] = (toplamlar[m.pb] || 0) + m.teslim;
     bekleyenler[m.pb] = (bekleyenler[m.pb] || 0) + m.bekleyen;
     reddedilenler[m.pb] = (reddedilenler[m.pb] || 0) + m.reddedilen;
+    girilmemisler[m.pb] = (girilmemisler[m.pb] || 0) + m.girilmemis;
   }
   const birimler = Object.keys(toplamlar);
 
@@ -130,6 +141,9 @@ function ciz() {
           para(toplamlar[b], b) + '</div>').join('')
       : '<div class="rakam sayi bos">' + para(0, 'TRY') + '</div>') +
     '<div class="alt">' + donemAdi() + '</div>' +
+    birimler.filter((b) => girilmemisler[b] > 0).map((b) =>
+      '<div class="acik sayi">⏳ teslim edilmemiş ' + para(girilmemisler[b], b) +
+      '</div>').join('') +
     birimler.filter((b) => bekleyenler[b] > 0).map((b) =>
       '<div class="zil sayi">🔔 onay bekleyen ' + para(bekleyenler[b], b) + '</div>').join('') +
     birimler.filter((b) => reddedilenler[b] > 0).map((b) =>
