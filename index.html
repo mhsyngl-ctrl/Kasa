@@ -14,7 +14,7 @@
 :root{
   --zemin:#ffffff; --kart:#F5F6F8; --kart2:#EDEFF3; --cizgi:#E4E7EC;
   --yazi:#1C2638; --soluk:#5A6473; --silik:#8A93A3;
-  --yesil:#0F7A52; --sari:#8A6A3D; --mavi:#1F4E8C;
+  --yesil:#0F7A52; --sari:#8A6A3D; --mavi:#1F4E8C; --kirmizi:#C0392B;
   --ust:env(safe-area-inset-top); --alt:env(safe-area-inset-bottom);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -36,7 +36,7 @@ button{background:none;border:0;padding:0;cursor:pointer}
   background:var(--kart);border:1px solid var(--cizgi)}
 #giris button{width:100%;padding:16px;border-radius:14px;background:var(--mavi);
   color:#ffffff;font-weight:700;margin-top:8px}
-.hata{color:#C0392B;font-size:13px;min-height:18px;margin-top:12px}
+.hata{color:var(--kirmizi);font-size:13px;min-height:18px;margin-top:12px}
 
 /* üst satır */
 .ust{display:flex;align-items:center;justify-content:space-between;
@@ -61,6 +61,8 @@ button{background:none;border:0;padding:0;cursor:pointer}
 .hero .rakam.bos{color:var(--silik)}
 .hero .alt{font-size:13px;color:var(--silik)}
 .hero .zil{font-size:13px;color:var(--sari);margin-top:10px}
+.hero .red{font-size:13px;color:var(--kirmizi);margin-top:8px}
+.markalar .marka .not.red{color:var(--kirmizi)}
 
 /* marka kutuları */
 .markalar{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px 28px}
@@ -118,6 +120,6 @@ button{background:none;border:0;padding:0;cursor:pointer}
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.js"></script>
-<script src="uygulama.js?s=4"></script>
+<script src="uygulama.js?s=5"></script>
 </body>
 </html>
